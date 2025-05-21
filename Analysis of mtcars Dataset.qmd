@@ -81,13 +81,16 @@ p <- ggplot(
   mtcars, 
   aes(x = hp, y = mpg)
   ) +
+  # Setting points for the plot:
   geom_point(size = 3, color ='purple') +
+  # Setting regression line for the plot:
   geom_smooth(
     method    = "lm",
     se        = TRUE,
     linetype  = "dashed",
     alpha     = 0.2
   ) +
+  # Setting the labels, title and text for the plot:
   labs(
     title = "Fuel Efficiency vs. Engine Power",
     x     = "Horsepower (HP)",
