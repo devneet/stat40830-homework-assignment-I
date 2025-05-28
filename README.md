@@ -1,11 +1,11 @@
-# Data Analysis: Motor Trend Car Road Tests
+# Data Analysis: Effects of Vitamin C on Tooth Growth in Guinea Pigs
 
-This data analysis project is based on the classic `mtcars` dataset, which originates from the 1974 issue of *Motor Trend* magazine. This repository contains an exploratory data analysis report that investigates the relationship between **engine horsepower** and **fuel efficiency** (miles per gallon) for a variety of car models.
+This project explores the `ToothGrowth` dataset, which originates from a classic biological experiment measuring the effects of **vitamin C dosage** and **delivery method** (orange juice vs. vitamin C) on tooth development in guinea pigs.
 
 The goal of this project is to:
 
-- Summarize key statistics (mean, standard deviation) of vehicle performance metrics  
-- Visualize the trade-off between horsepower and fuel economy using an interactive scatterplot  
-- Interpret and communicate insights in a reproducible and visually appealing format
+-   Summarize tooth length statistics (mean, standard deviation) grouped by supplement type and dose\
+-   Visualize how dosage and delivery method influence tooth growth using an interactive boxplot\
+-   Interpret whether the combination of **dose** and **supplement type** significantly affects dental development
 
 The analysis has been implemented using **R** and **Quarto**.

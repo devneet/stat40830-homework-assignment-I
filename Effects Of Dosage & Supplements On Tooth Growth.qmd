@@ -1,0 +1,126 @@
+---
+title: "Effects of Vitamin C on Tooth Growth in Guinea Pigs"
+author: "Devneet Mohanty"
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-line-numbers: true
+    fontsize: 1.2em
+    toc: true
+    toc-title: '**Contents**'
+    embed-resources: true
+    grid:
+      body-width: 800px
+    theme: 
+      - superhero
+      - custom-theme.css
+    css: custom-theme.css
+  revealjs: 
+    slide-number: true
+    incremental: false
+    auto-stretch: false
+    embed-resources: true
+    center: true
+    theme:
+      - custom-theme.css
+urlcolor: blue
+progress: true
+controls: true
+execute: 
+  eval: true
+  echo: false
+  warning: false
+---
+
+## Background
+
+A classic biological experiment was conducted to determine the effects of **vitamin C** on the tooth length of guinea pigs. The data records the **length of odontoblasts (cells responsible for tooth growth)** under different supplement types and dosages in 60 guinea pigs. In this brief analysis, I will:
+
+1. Compute summary statistics for **tooth length**, categorized by **supplement type** and **dose level**.  
+2. Visualize the impact of **vitamin C dosage** and **delivery method** on guinea pig tooth growth using an interactive boxplot.  
+3. Interpret whether the **form of supplementation** (OJ vs. VC) and **dosage amount** significantly influence tooth development.  
+
+---
+
+## Summary Statistics
+
+We begin by calculating the mean and standard deviation of **tooth length**, grouped by **supplement type** and **dosage level**, using the `dplyr` package.
+
+```{r}
+#| label: desc-stat-tooth
+#| echo: false
+#| message: false
+#| warning: false
+
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+# Calculate summary statistics
+stats_tooth <- ToothGrowth %>%
+  group_by(Supplement = supp, Dose_mg = dose) %>%
+  summarise(
+    Mean_Tooth_Length = round(mean(len), 2),
+    SD_Tooth_Length   = round(sd(len), 2),
+    .groups = "drop"
+  )
+
+# Display as styled HTML table
+stats_tooth %>%
+  kable("html", caption = "Summary Statistics of Tooth Length by Supplement and Dose") %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+    full_width = FALSE,
+    position = "center"
+  )
+```
+
+## Effect of Supplement and Dose on Tooth Length
+
+The following interactive boxplot compares [Tooth Length (len)]{style="color: darkgreen;"} across different dosage levels and supplement types. It helps us observe how increasing the vitamin C dose affects tooth growth and whether the delivery method (Orange Juice vs. Vitamin C supplement) plays a role.
+
+This visualization allows us to:
+
+- Observe how increasing doses of Vitamin C (0.5, 1.0, and 2.0 mg) influence the average tooth growth in guinea pigs.
+
+- Examine whether the form of Vitamin C delivery — either as Orange Juice (OJ) or a pure supplement (VC) — has a differential effect on tooth development.
+
+- Identify potential interaction effects between dosage and supplement type, especially if the growth trends differ significantly across groups.
+
+- By comparing the spread and central tendency (median) of tooth length distributions within each group, we aim to determine the optimal dose and delivery method for promoting tooth growth.
+
+```{r}
+#| label: toothgrowth-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(plotly)
+
+# Convert dose to factor for plotting
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+
+# Create boxplot
+p_box <- ggplot(ToothGrowth, aes(x = dose, y = len, fill = supp)) +
+  geom_boxplot(alpha = 0.7, outlier.color = "red", outlier.size = 2) +
+  labs(
+    title = "Tooth Length by Dose and Supplement Type",
+    x = "Supplement Type Dose (mg)",
+    y = "Tooth Length (mm)",
+    fill = "Supplement Type"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggplotly(p_box)
+```
+
+
+## Interpretation of Relationship
+
+- There’s a clear positive effect of increasing vitamin C dosage on tooth length: higher doses generally result in longer teeth.
+
+- At each dose level, orange juice (OJ) tends to produce slightly greater tooth growth than the synthetic vitamin C supplement (VC), especially at the 0.5 mg and 1.0 mg levels.
+
+- These patterns suggest that both dosage and delivery method significantly influence tooth development in guinea pigs, with a potential interaction between the two factors.
